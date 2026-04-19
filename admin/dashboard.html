@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arabesque CMS Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="cms-shell">
+    <aside class="cms-sidebar">
+      <div class="cms-brand">
+        <div class="cms-brand-main">ARABESQUE</div>
+        <div class="cms-brand-sub">CMS</div>
+      </div>
+      <p class="cms-sidebar-copy">Git-backed editing for the live marketing site. Every save commits to GitHub and lets Vercel redeploy.</p>
+      <div class="cms-session" id="cms-session">Checking login…</div>
+      <a class="cms-logout" id="cms-logout" href="/api/auth/logout" hidden>Log Out</a>
+    </aside>
+
+    <section class="cms-main">
+      <header class="cms-header">
+        <div>
+          <div class="cms-label">CONTENT STUDIO</div>
+          <h1 class="cms-title">Site Content</h1>
+        </div>
+        <div class="cms-actions">
+          <button class="cms-save" id="cms-save" type="button" hidden>Save Changes</button>
+        </div>
+      </header>
+
+      <div class="cms-status" id="cms-status">Checking session…</div>
+
+      <form class="cms-form" id="cms-form" hidden>
+        <section class="cms-card">
+          <div class="cms-card-header">
+            <div class="cms-label">SEO</div>
+            <h2 class="cms-card-title">Search & Sharing</h2>
+          </div>
+          <div class="cms-grid two">
+            <label class="cms-field">
+              <span>Title</span>
+              <input data-path="seo.title" type="text">
+            </label>
+            <label class="cms-field">
+              <span>Theme Color</span>
+              <input data-path="seo.themeColor" type="text">
+            </label>
+            <label class="cms-field full">
+              <span>Description</span>
+              <textarea data-path="seo.description" rows="3"></textarea>
+            </label>
+            <label class="cms-field">
+              <span>Open Graph Title</span>
+              <input data-path="seo.ogTitle" type="text">
+            </label>
+            <label class="cms-field">
+              <span>Locale</span>
+              <input data-path="seo.locale" type="text">
+            </label>
+            <label class="cms-field full">
+              <span>Open Graph Description</span>
+              <textarea data-path="seo.ogDescription" rows="3"></textarea>
+            </label>
+          </div>
+        </section>
+
+        <section class="cms-card">
+          <div class="cms-card-header">
+            <div class="cms-label">Hero</div>
+            <h2 class="cms-card-title">Opening Section</h2>
+          </div>
+          <div class="cms-grid two">
+            <label class="cms-field full">
+              <span>Hero Description</span>
+              <textarea data-path="hero.description" rows="3"></textarea>
+            </label>
+            <label class="cms-field">
+              <span>Film Strip Label</span>
+              <input data-path="hero.filmStripLabel" type="text">
+            </label>
+            <label class="cms-field">
+              <span>Location Label</span>
+              <input data-path="hero.locationLabel" type="text">
+            </label>
+          </div>
+        </section>
+
+        <section class="cms-card">
+          <div class="cms-card-header">
+            <div class="cms-label">Portfolio</div>
+            <h2 class="cms-card-title">Featured Projects</h2>
+          </div>
+          <div class="cms-grid two">
+            <label class="cms-field">
+              <span>Subtitle</span>
+              <input data-path="portfolio.subtitle" type="text">
+            </label>
+            <label class="cms-field">
+              <span>Footer Title</span>
+              <input data-path="portfolio.footerTitle" type="text">
+            </label>
+            <label class="cms-field full">
+              <span>Footer Link Label</span>
+              <input data-path="portfolio.footerLinkLabel" type="text">
+            </label>
+          </div>
+
+          <div class="cms-repeaters">
+            <div class="cms-subtitle">Projects</div>
+            <div class="cms-projects">
+              <article class="cms-project">
+                <h3>Project 1</h3>
+                <input data-path="portfolio.projects.0.category" type="text" placeholder="Category">
+                <input data-path="portfolio.projects.0.titleHtml" type="text" placeholder="Title HTML">
+                <input data-path="portfolio.projects.0.location" type="text" placeholder="Location">
+                <input data-path="portfolio.projects.0.year" type="text" placeholder="Year">
+                <input data-path="portfolio.projects.0.image" type="text" placeholder="Image path or URL">
+                <input data-path="portfolio.projects.0.imageAlt" type="text" placeholder="Image alt">
+                <textarea data-path="portfolio.projects.0.description" rows="4" placeholder="Description"></textarea>
+              </article>
+              <article class="cms-project">
+                <h3>Project 2</h3>
+                <input data-path="portfolio.projects.1.category" type="text" placeholder="Category">
+                <input data-path="portfolio.projects.1.titleHtml" type="text" placeholder="Title HTML">
+                <input data-path="portfolio.projects.1.location" type="text" placeholder="Location">
+                <input data-path="portfolio.projects.1.year" type="text" placeholder="Year">
+                <input data-path="portfolio.projects.1.image" type="text" placeholder="Image path or URL">
+                <input data-path="portfolio.projects.1.imageAlt" type="text" placeholder="Image alt">
+                <textarea data-path="portfolio.projects.1.description" rows="4" placeholder="Description"></textarea>
+              </article>
+              <article class="cms-project">
+                <h3>Project 3</h3>
+                <input data-path="portfolio.projects.2.category" type="text" placeholder="Category">
+                <input data-path="portfolio.projects.2.titleHtml" type="text" placeholder="Title HTML">
+                <input data-path="portfolio.projects.2.location" type="text" placeholder="Location">
+                <input data-path="portfolio.projects.2.year" type="text" placeholder="Year">
+                <input data-path="portfolio.projects.2.image" type="text" placeholder="Image path or URL">
+                <input data-path="portfolio.projects.2.imageAlt" type="text" placeholder="Image alt">
+                <textarea data-path="portfolio.projects.2.description" rows="4" placeholder="Description"></textarea>
+              </article>
+              <article class="cms-project">
+                <h3>Project 4</h3>
+                <input data-path="portfolio.projects.3.category" type="text" placeholder="Category">
+                <input data-path="portfolio.projects.3.titleHtml" type="text" placeholder="Title HTML">
+                <input data-path="portfolio.projects.3.location" type="text" placeholder="Location">
+                <input data-path="portfolio.projects.3.year" type="text" placeholder="Year">
+                <input data-path="portfolio.projects.3.image" type="text" placeholder="Image path or URL">
+                <input data-path="portfolio.projects.3.imageAlt" type="text" placeholder="Image alt">
+                <textarea data-path="portfolio.projects.3.description" rows="4" placeholder="Description"></textarea>
+              </article>
+              <article class="cms-project">
+                <h3>Project 5</h3>
+                <input data-path="portfolio.projects.4.category" type="text" placeholder="Category">
+                <input data-path="portfolio.projects.4.titleHtml" type="text" placeholder="Title HTML">
+                <input data-path="portfolio.projects.4.location" type="text" placeholder="Location">
+                <input data-path="portfolio.projects.4.year" type="text" placeholder="Year">
+                <input data-path="portfolio.projects.4.image" type="text" placeholder="Image path or URL">
+                <input data-path="portfolio.projects.4.imageAlt" type="text" placeholder="Image alt">
+                <textarea data-path="portfolio.projects.4.description" rows="4" placeholder="Description"></textarea>
+              </article>
+              <article class="cms-project">
+                <h3>Project 6</h3>
+                <input data-path="portfolio.projects.5.category" type="text" placeholder="Category">
+                <input data-path="portfolio.projects.5.titleHtml" type="text" placeholder="Title HTML">
+                <input data-path="portfolio.projects.5.location" type="text" placeholder="Location">
+                <input data-path="portfolio.projects.5.year" type="text" placeholder="Year">
+                <input data-path="portfolio.projects.5.image" type="text" placeholder="Image path or URL">
+                <input data-path="portfolio.projects.5.imageAlt" type="text" placeholder="Image alt">
+                <textarea data-path="portfolio.projects.5.description" rows="4" placeholder="Description"></textarea>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="cms-card">
+          <div class="cms-card-header">
+            <div class="cms-label">About</div>
+            <h2 class="cms-card-title">Legacy Section</h2>
+          </div>
+          <div class="cms-grid two">
+            <label class="cms-field">
+              <span>Watermark 1</span>
+              <input data-path="about.watermarkPrimary" type="text">
+            </label>
+            <label class="cms-field">
+              <span>Watermark 2</span>
+              <input data-path="about.watermarkSecondary" type="text">
+            </label>
+            <label class="cms-field full">
+              <span>Kicker</span>
+              <input data-path="about.kicker" type="text">
+            </label>
+            <label class="cms-field full">
+              <span>Lead</span>
+              <textarea data-path="about.lead" rows="4"></textarea>
+            </label>
+            <label class="cms-field">
+              <span>Workshop Label</span>
+              <input data-path="about.workshopLabel" type="text">
+            </label>
+            <label class="cms-field">
+              <span>Workshop Image</span>
+              <input data-path="about.image" type="text">
+            </label>
+            <label class="cms-field full">
+              <span>Workshop Value</span>
+              <textarea data-path="about.workshopValue" rows="3"></textarea>
+            </label>
+            <label class="cms-field full">
+              <span>Ethos</span>
+              <textarea data-path="about.ethos" rows="4"></textarea>
+            </label>
+          </div>
+
+          <div class="cms-repeaters">
+            <div class="cms-subtitle">Pillars</div>
+            <div class="cms-grid three">
+              <label class="cms-field">
+                <span>Pillar 1 Title HTML</span>
+                <input data-path="about.pillars.0.titleHtml" type="text">
+              </label>
+              <label class="cms-field">
+                <span>Pillar 2 Title HTML</span>
+                <input data-path="about.pillars.1.titleHtml" type="text">
+              </label>
+              <label class="cms-field">
+                <span>Pillar 3 Title HTML</span>
+                <input data-path="about.pillars.2.titleHtml" type="text">
+              </label>
+              <label class="cms-field">
+                <span>Pillar 1 Description</span>
+                <textarea data-path="about.pillars.0.description" rows="4"></textarea>
+              </label>
+              <label class="cms-field">
+                <span>Pillar 2 Description</span>
+                <textarea data-path="about.pillars.1.description" rows="4"></textarea>
+              </label>
+              <label class="cms-field">
+                <span>Pillar 3 Description</span>
+                <textarea data-path="about.pillars.2.description" rows="4"></textarea>
+              </label>
+            </div>
+          </div>
+
+          <div class="cms-repeaters">
+            <div class="cms-subtitle">Metrics</div>
+            <div class="cms-grid three">
+              <label class="cms-field">
+                <span>Metric 1 Value</span>
+                <input data-path="about.metrics.0.value" type="text">
+              </label>
+              <label class="cms-field">
+                <span>Metric 2 Value</span>
+                <input data-path="about.metrics.1.value" type="text">
+              </label>
+              <label class="cms-field">
+                <span>Metric 3 Value</span>
+                <input data-path="about.metrics.2.value" type="text">
+              </label>
+              <label class="cms-field">
+                <span>Metric 1 Label</span>
+                <textarea data-path="about.metrics.0.label" rows="3"></textarea>
+              </label>
+              <label class="cms-field">
+                <span>Metric 2 Label</span>
+                <textarea data-path="about.metrics.1.label" rows="3"></textarea>
+              </label>
+              <label class="cms-field">
+                <span>Metric 3 Label</span>
+                <textarea data-path="about.metrics.2.label" rows="3"></textarea>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="cms-card">
+          <div class="cms-card-header">
+            <div class="cms-label">Contact</div>
+            <h2 class="cms-card-title">Direct Inquiries</h2>
+          </div>
+          <div class="cms-grid two">
+            <label class="cms-field">
+              <span>Email</span>
+              <input data-path="contact.email" type="text">
+            </label>
+            <label class="cms-field">
+              <span>Phone Label</span>
+              <input data-path="contact.phone" type="text">
+            </label>
+            <label class="cms-field">
+              <span>Phone Href</span>
+              <input data-path="contact.phoneHref" type="text">
+            </label>
+            <label class="cms-field">
+              <span>WhatsApp Label</span>
+              <input data-path="contact.whatsappLabel" type="text">
+            </label>
+            <label class="cms-field full">
+              <span>WhatsApp Href</span>
+              <input data-path="contact.whatsappHref" type="text">
+            </label>
+            <label class="cms-field full">
+              <span>Footer Copy</span>
+              <input data-path="contact.footerCopy" type="text">
+            </label>
+          </div>
+        </section>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arabesque CMS Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="login.js" defer></script>
+</head>
+<body class="cms-login-body">
+  <main class="cms-login-shell">
+    <section class="cms-login-hero">
+      <div class="cms-brand">
+        <div class="cms-brand-main">ARABESQUE</div>
+        <div class="cms-brand-sub">CMS</div>
+      </div>
+      <div class="cms-login-copy-wrap">
+        <div class="cms-label">Content Studio</div>
+        <h1 class="cms-login-display">A Clean Back Office For A Crafted Brand.</h1>
+        <p class="cms-login-copy">Sign in to update site content, commit changes to GitHub, and let Vercel redeploy the latest version automatically.</p>
+      </div>
+    </section>
+
+    <section class="cms-login-panel">
+      <div class="cms-login-card">
+        <div class="cms-label">Admin Access</div>
+        <h2 class="cms-login-title">Sign In</h2>
+        <p class="cms-login-copy">Only approved administrators can access the dashboard.</p>
+        <div class="cms-status" id="cms-status">Enter your username and password.</div>
+        <form class="cms-login-form" id="cms-login-form">
+          <label class="cms-field">
+            <span>Username</span>
+            <input id="cms-username" name="username" type="text" autocomplete="username" required>
+          </label>
+          <label class="cms-field">
+            <span>Password</span>
+            <input id="cms-password" name="password" type="password" autocomplete="current-password" required>
+          </label>
+          <button class="cms-login-submit" id="cms-login-submit" type="submit">Enter Dashboard</button>
+        </form>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

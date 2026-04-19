@@ -61,6 +61,13 @@ img {
     display: block;
 }
 
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+    .cursor,
+    .cursor-label {
+        display: none;
+    }
+}
+
 /* ==========================================================================
    Typography
    ========================================================================== */
@@ -1684,12 +1691,21 @@ body.menu-open .hamburger::after {
     color: var(--color-black);
 }
 
+.form-submit:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
 .form-success {
     display: none;
     color: #4CAF50;
     font-family: var(--font-body);
     font-size: 14px;
     margin-top: 16px;
+}
+
+.form-success[data-state="error"] {
+    color: #E07A5F;
 }
 
 @media (max-width: 768px) {
@@ -1786,16 +1802,41 @@ body.menu-open .hamburger::after {
     gap: 24px;
 }
 
-.fb-right a {
+.fb-right a,
+.fb-placeholder {
     font-family: var(--font-body);
     font-size: 12px;
     color: var(--color-grey);
     transition: color 0.3s ease;
+}
+
+.fb-right a {
     cursor: pointer;
+}
+
+.fb-placeholder {
+    cursor: default;
 }
 
 .fb-right a:hover {
     color: #F2EFE9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .marquee-content,
+    .luxury-track {
+        animation: none !important;
+        transform: none !important;
+    }
 }
 
 @media (max-width: 1024px) {

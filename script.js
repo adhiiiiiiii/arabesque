@@ -1,13 +1,188 @@
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+const enableMotion = !prefersReducedMotion;
+const enableCustomCursor = enableMotion && !isCoarsePointer;
+
+async function loadSiteContent() {
+    try {
+        const response = await fetch('content/site.json', { cache: 'no-store' });
+        if (!response.ok) return null;
+        const content = await response.json();
+        applySiteContent(content);
+        return content;
+    } catch {
+        return null;
+    }
+}
+
+function setMeta(selector, value, attribute = 'content') {
+    const element = document.querySelector(selector);
+    if (element && value) {
+        element.setAttribute(attribute, value);
+    }
+}
+
+function applyProjectContent(projects = []) {
+    const panels = document.querySelectorAll('.project-panel');
+
+    panels.forEach((panel, index) => {
+        const project = projects[index];
+        if (!project) return;
+
+        const image = panel.querySelector('.project-img');
+        const category = panel.querySelector('.pr-middle .label-text');
+        const title = panel.querySelector('.pr-title');
+        const metaSpans = panel.querySelectorAll('.pr-meta span');
+        const description = panel.querySelector('.pr-desc');
+
+        if (image) {
+            image.src = project.image;
+            image.alt = project.imageAlt;
+        }
+        if (category) category.textContent = project.category;
+        if (title) title.innerHTML = project.titleHtml;
+        if (metaSpans[0]) metaSpans[0].textContent = project.location;
+        if (metaSpans[1]) metaSpans[1].textContent = project.year;
+        if (description) description.textContent = project.description;
+    });
+}
+
+function applyAboutContent(about = {}) {
+    const watermarks = document.querySelectorAll('.about-watermark');
+    if (watermarks[0] && about.watermarkPrimary) watermarks[0].textContent = about.watermarkPrimary;
+    if (watermarks[1] && about.watermarkSecondary) watermarks[1].textContent = about.watermarkSecondary;
+
+    const kicker = document.querySelector('.about-kicker');
+    const lead = document.querySelector('.about-lead');
+    const aboutImage = document.querySelector('.about-img');
+    const badgeLabel = document.querySelector('.about-badge-label');
+    const badgeValue = document.querySelector('.about-badge-value');
+    const ethos = document.querySelector('.about-essay-block .body-text');
+
+    if (kicker && about.kicker) kicker.textContent = about.kicker;
+    if (lead && about.lead) lead.textContent = about.lead;
+    if (aboutImage && about.image) {
+        aboutImage.src = about.image;
+        aboutImage.alt = about.imageAlt || aboutImage.alt;
+    }
+    if (badgeLabel && about.workshopLabel) badgeLabel.textContent = about.workshopLabel;
+    if (badgeValue && about.workshopValue) badgeValue.textContent = about.workshopValue;
+    if (ethos && about.ethos) ethos.textContent = about.ethos;
+
+    const pillars = document.querySelectorAll('.about-pillar');
+    pillars.forEach((pillar, index) => {
+        const pillarData = about.pillars?.[index];
+        if (!pillarData) return;
+        const title = pillar.querySelector('.pillar-title');
+        const text = pillar.querySelector('.body-text');
+        if (title) title.innerHTML = pillarData.titleHtml;
+        if (text) text.textContent = pillarData.description;
+    });
+
+    const metrics = document.querySelectorAll('.about-metric');
+    metrics.forEach((metric, index) => {
+        const metricData = about.metrics?.[index];
+        if (!metricData) return;
+        const value = metric.querySelector('.stat-num');
+        const label = metric.querySelector('.stat-label');
+        if (value) value.textContent = metricData.value;
+        if (label) label.textContent = metricData.label;
+    });
+}
+
+function applyContactContent(contact = {}) {
+    const emailRow = document.querySelector('a[href^="mailto:"]');
+    const phoneRow = document.querySelector('a[href^="tel:"]');
+    const whatsappRow = document.querySelector('a[href*="wa.me"]');
+    const footerCopy = document.querySelector('.fb-left');
+
+    if (emailRow && contact.email) {
+        emailRow.href = `mailto:${contact.email}`;
+        const value = emailRow.querySelector('.cr-value');
+        if (value) value.textContent = contact.email;
+    }
+
+    if (phoneRow && contact.phoneHref) {
+        phoneRow.href = `tel:${contact.phoneHref}`;
+        const value = phoneRow.querySelector('.cr-value');
+        if (value) value.textContent = contact.phone || value.textContent;
+    }
+
+    if (whatsappRow && contact.whatsappHref) {
+        whatsappRow.href = contact.whatsappHref;
+        const value = whatsappRow.querySelector('.cr-value');
+        if (value) value.textContent = contact.whatsappLabel || value.textContent;
+    }
+
+    if (footerCopy && contact.footerCopy) footerCopy.innerHTML = contact.footerCopy;
+}
+
+function applySiteContent(content) {
+    if (!content) return;
+
+    if (content.seo) {
+        document.title = content.seo.title || document.title;
+        setMeta('meta[name="description"]', content.seo.description);
+        setMeta('meta[name="theme-color"]', content.seo.themeColor);
+        setMeta('meta[property="og:title"]', content.seo.ogTitle || content.seo.title);
+        setMeta('meta[property="og:description"]', content.seo.ogDescription || content.seo.description);
+        setMeta('meta[property="og:site_name"]', content.seo.siteName);
+        setMeta('meta[property="og:locale"]', content.seo.locale);
+        setMeta('meta[name="twitter:title"]', content.seo.ogTitle || content.seo.title);
+        setMeta('meta[name="twitter:description"]', content.seo.ogDescription || content.seo.description);
+        setMeta('meta[property="og:image"]', content.portfolio?.projects?.[0]?.image);
+        setMeta('meta[name="twitter:image"]', content.portfolio?.projects?.[0]?.image);
+
+        const structuredData = document.getElementById('structured-data');
+        if (structuredData) {
+            structuredData.textContent = JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'LocalBusiness',
+                name: content.seo.siteName || 'Arabesque Carpentry',
+                description: content.seo.description,
+                areaServed: 'Bahrain',
+                image: content.portfolio?.projects?.[0]?.image || 'assets/door.png',
+                telephone: content.contact?.phone || '+973 1770 1006',
+                email: content.contact?.email || 'actbahrain@batelco.com.bh'
+            });
+        }
+    }
+
+    if (content.hero) {
+        const heroDesc = document.querySelector('.hero-desc');
+        const filmStripLabel = document.querySelector('.film-strip-label');
+        const heroLocation = document.querySelector('.hero-bottom-right');
+
+        if (heroDesc && content.hero.description) heroDesc.textContent = content.hero.description;
+        if (filmStripLabel && content.hero.filmStripLabel) filmStripLabel.textContent = content.hero.filmStripLabel;
+        if (heroLocation && content.hero.locationLabel) heroLocation.textContent = content.hero.locationLabel;
+    }
+
+    if (content.portfolio) {
+        const subtitle = document.querySelector('.ph-subtitle');
+        const footerTitle = document.querySelector('.pf-title');
+        const footerLink = document.querySelector('.pf-link');
+
+        if (subtitle && content.portfolio.subtitle) subtitle.textContent = content.portfolio.subtitle;
+        if (footerTitle && content.portfolio.footerTitle) footerTitle.textContent = content.portfolio.footerTitle;
+        if (footerLink && content.portfolio.footerLinkLabel) footerLink.textContent = content.portfolio.footerLinkLabel;
+        applyProjectContent(content.portfolio.projects);
+    }
+
+    applyAboutContent(content.about);
+    applyContactContent(content.contact);
+}
+
 // Initialize Lenis
 const lenis = new Lenis({
-    duration: 1.2,
+    duration: enableMotion ? 0.9 : 0,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     direction: 'vertical',
     gestureDirection: 'vertical',
-    smooth: true,
+    smooth: enableMotion,
     mouseMultiplier: 1,
     smoothTouch: false,
     touchMultiplier: 2,
@@ -25,15 +200,19 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = this.getAttribute('href');
-        if(target !== '#') {
+        if(target !== '#' && enableMotion) {
             lenis.scrollTo(target, { offset: -80 }); // offset for navbar
+        } else if (target !== '#') {
+            document.querySelector(target)?.scrollIntoView();
         }
     });
 });
 
-gsap.ticker.add((time) => {
-  lenis.raf(time * 1000);
-});
+if (enableMotion) {
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+}
 gsap.ticker.lagSmoothing(0, 0);
 
 // Custom Cursor
@@ -48,26 +227,30 @@ let cursorY = 0;
 // Cursor lag effect (set to 1 to remove lag as requested)
 const lag = 1; 
 
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
+if (enableCustomCursor && cursor && cursorLabel) {
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
 
-function animateCursor() {
-    let dx = mouseX - cursorX;
-    let dy = mouseY - cursorY;
-    cursorX += dx * lag;
-    cursorY += dy * lag;
-    
-    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
-    cursorLabel.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
-    
-    requestAnimationFrame(animateCursor);
+    function animateCursor() {
+        let dx = mouseX - cursorX;
+        let dy = mouseY - cursorY;
+        cursorX += dx * lag;
+        cursorY += dy * lag;
+        
+        cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+        cursorLabel.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+        
+        requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
 }
-animateCursor();
 
 // Function to attach hover states
 function initCursorHovers() {
+    if (!enableCustomCursor || !cursor) return;
+
     const links = document.querySelectorAll('a, button');
     links.forEach(link => {
         link.addEventListener('mouseenter', () => cursor.classList.add('link-hover'));
@@ -153,6 +336,8 @@ mobileLinks.forEach(link => {
 
 // Initial Page Load Animations
 function initPageLoadSequence() {
+    if (!enableMotion) return;
+
     const tl = gsap.timeline();
 
     // 0-300ms: Navbar fades in
@@ -210,6 +395,8 @@ function initPageLoadSequence() {
 
 // Cinematic Portfolio (Section 3) ScrollTrigger
 function initCinematicPortfolio() {
+    if (!enableMotion) return;
+
     const panels = gsap.utils.toArray('.project-panel');
     const totalPanels = panels.length;
     
@@ -337,22 +524,37 @@ function initContactForm() {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const btn = form.querySelector('button');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<span>Sending...</span>';
-            setTimeout(() => {
-                form.reset();
-                btn.innerHTML = originalText;
+            const formData = new FormData(form);
+            const name = String(formData.get('name') || '').trim();
+            const email = String(formData.get('email') || '').trim();
+            const message = String(formData.get('message') || '').trim();
+
+            if (!name || !email || !message) {
+                successMsg.dataset.state = 'error';
+                successMsg.textContent = 'Please fill in your name, email, and project details.';
                 successMsg.style.display = 'block';
-                setTimeout(() => {
-                    successMsg.style.display = 'none';
-                }, 5000);
-            }, 1000);
+                return;
+            }
+
+            const subject = encodeURIComponent(`Project Inquiry from ${name}`);
+            const body = encodeURIComponent(
+                `Name: ${name}\nEmail: ${email}\n\nProject Details:\n${message}`
+            );
+
+            btn.disabled = true;
+            window.location.href = `mailto:actbahrain@batelco.com.bh?subject=${subject}&body=${body}`;
+            successMsg.dataset.state = 'success';
+            successMsg.textContent = 'Your email app should open with a pre-filled inquiry.';
+            successMsg.style.display = 'block';
+            btn.disabled = false;
         });
     }
 }
 
 // Section Reveals
 function initSectionReveals() {
+    if (!enableMotion) return;
+
     // Select sections to animate (excluding hero and portfolio which have custom logic)
     const sections = document.querySelectorAll('section:not(.hero):not(.portfolio), .footer-cta');
     
@@ -428,7 +630,8 @@ function initSectionReveals() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadSiteContent();
     initPageLoadSequence();
     initCinematicPortfolio();
     initProductsAccordion();
@@ -439,5 +642,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.addEventListener('load', () => {
     // Refresh ScrollTrigger once all images and resources have actually loaded
-    ScrollTrigger.refresh();
+    if (enableMotion) {
+        ScrollTrigger.refresh();
+    }
 });
