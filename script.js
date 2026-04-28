@@ -35,6 +35,8 @@ function applyProjectContent(projects = []) {
         const image = panel.querySelector('.project-img');
         const category = panel.querySelector('.pr-middle .label-text');
         const title = panel.querySelector('.pr-title');
+        const topLabel = panel.querySelector('.pr-top');
+        const meta = panel.querySelector('.pr-meta');
         const metaSpans = panel.querySelectorAll('.pr-meta span');
         const description = panel.querySelector('.pr-desc');
 
@@ -44,8 +46,20 @@ function applyProjectContent(projects = []) {
         }
         if (category) category.textContent = project.category;
         if (title) title.innerHTML = project.titleHtml;
-        if (metaSpans[0]) metaSpans[0].textContent = project.location;
-        if (metaSpans[1]) metaSpans[1].textContent = project.year;
+        if (topLabel) topLabel.textContent = 'FEATURED WORK';
+
+        const hasLocation = Boolean(project.location && project.location.trim());
+        const hasYear = Boolean(project.year && project.year.trim());
+
+        if (metaSpans[0]) {
+            metaSpans[0].textContent = project.location || '';
+            metaSpans[0].style.display = hasLocation ? '' : 'none';
+        }
+        if (metaSpans[1]) {
+            metaSpans[1].textContent = project.year || '';
+            metaSpans[1].style.display = hasYear ? '' : 'none';
+        }
+        if (meta) meta.style.display = hasLocation || hasYear ? '' : 'none';
         if (description) description.textContent = project.description;
     });
 }

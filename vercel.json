@@ -1,4 +1,22 @@
 {
+  "rewrites": [
+    {
+      "source": "/admin-control",
+      "destination": "/admin-control/index.html"
+    },
+    {
+      "source": "/admin-control/",
+      "destination": "/admin-control/index.html"
+    },
+    {
+      "source": "/admin-control/dashboard",
+      "destination": "/admin-control/dashboard.html"
+    },
+    {
+      "source": "/admin-control/dashboard/",
+      "destination": "/admin-control/dashboard.html"
+    }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",

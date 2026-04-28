@@ -1,84 +1,84 @@
 {
   "seo": {
-    "title": "Arabesque Carpentry | Crafting Excellence Since 1983",
-    "description": "Arabesque Carpentry is a premium woodworking and interior fit-out company based in Sitra, Bahrain. Trusted for doors, fit-outs, staircases, wardrobes, kitchens, and specialist joinery since 1983.",
-    "ogTitle": "Arabesque Carpentry | Crafting Excellence Since 1983",
-    "ogDescription": "Premium woodworking and interior fit-out specialists in Bahrain, delivering doors, staircases, kitchens, wardrobes, and specialist joinery since 1983.",
+    "title": "Arabesque Carpentry | Architectural Woodwork & Fit-Out",
+    "description": "Arabesque Carpentry is a premium woodworking and interior fit-out company based in Sitra, Bahrain. Trusted for doors, fit-outs, staircases, wardrobes, kitchens, and specialist joinery.",
+    "ogTitle": "Arabesque Carpentry | Architectural Woodwork & Fit-Out",
+    "ogDescription": "Premium woodworking and interior fit-out specialists in Bahrain, delivering doors, staircases, kitchens, wardrobes, and specialist joinery.",
     "siteName": "Arabesque Carpentry",
     "locale": "en_BH",
     "themeColor": "#0d0d0d"
   },
   "hero": {
-    "description": "Bahrain's most trusted woodwork and fit-out specialists. Trusted by the Royal Court, BDF, and 50+ institutions.",
-    "filmStripLabel": "30+ completed projects",
-    "locationLabel": "SITRA · BAHRAIN · EST. 1983"
+    "description": "Architectural woodwork and interior fit-out specialists delivering doors, joinery, and crafted spaces across Bahrain.",
+    "filmStripLabel": "Selected craftsmanship",
+    "locationLabel": "SITRA - BAHRAIN"
   },
   "portfolio": {
-    "subtitle": "Six projects. One standard.",
-    "footerTitle": "And 24 more projects.",
-    "footerLinkLabel": "View the complete portfolio →",
+    "subtitle": "Selected spaces. One standard.",
+    "footerTitle": "More work across Bahrain.",
+    "footerLinkLabel": "View the complete portfolio ->",
     "projects": [
       {
-        "category": "RELIGIOUS ARCHITECTURE",
-        "titleHtml": "MOSQUE AT<br>ZALLAQ",
-        "location": "Location: Zallaq, Bahrain",
+        "category": "RELIGIOUS PROJECTS",
+        "titleHtml": "MOSQUE<br>ENTRANCES",
+        "location": "",
         "year": "2019",
-        "description": "Intricate geometric carvings and massive wooden doors matching heritage aesthetics with modern fire-rating constraints.",
-        "image": "https://tourismbh.com/uploads/blogs-top-mosques-in-bahrain-the-oldest-and-most-beautiful/alfateh2.webp",
-        "imageAlt": "Bahraini mosque architecture"
+        "description": "Custom wooden entrances and decorative detailing developed for mosque environments, balancing craftsmanship, durability, and code-compliant performance.",
+        "image": "assets/door.png",
+        "imageAlt": "Decorative wooden entrance doors"
       },
       {
-        "category": "RELIGIOUS ARCHITECTURE",
-        "titleHtml": "ABDULRAHMAN ALFARSI<br>MOSQUE",
-        "location": "Location: Bahrain",
+        "category": "RELIGIOUS PROJECTS",
+        "titleHtml": "MOSQUE<br>INTERIORS",
+        "location": "",
         "year": "2021",
-        "description": "Complete interior woodwork including the main prayer hall doors, minbar, and decorative wall panelling.",
-        "image": "https://tourismbh.com/uploads/blogs-top-mosques-in-bahrain-the-oldest-and-most-beautiful/Al_Khamis_Banner.webp",
-        "imageAlt": "Bahraini mosque exterior"
+        "description": "Complete interior woodwork packages including doors, decorative panelling, and feature joinery for prayer halls and supporting spaces.",
+        "image": "assets/arabesque.png",
+        "imageAlt": "Wood carving craftsmanship detail"
       },
       {
         "category": "RETAIL FIT-OUT",
-        "titleHtml": "THE<br>FACESHOP",
-        "location": "Location: City Centre Bahrain",
+        "titleHtml": "RETAIL<br>STORES",
+        "location": "",
         "year": "2022",
-        "description": "Premium retail environment featuring custom curved display units, integrated lighting, and high-gloss finishes.",
-        "image": "https://tourismbh.com/uploads/PhotoGallery/PhotoGallery_22012025115902/File_22012025115902496.webp",
-        "imageAlt": "City Centre Bahrain interior"
+        "description": "Retail environments shaped with custom display units, integrated lighting, and refined finishes suited to customer-facing commercial spaces.",
+        "image": "assets/tools.png",
+        "imageAlt": "Woodworking tools and material detail"
       },
       {
         "category": "COMMERCIAL INTERIOR",
-        "titleHtml": "BAHRAIN<br>AIR SHOW",
-        "location": "Location: Sakhir Air Base",
+        "titleHtml": "COMMERCIAL<br>INTERIORS",
+        "location": "",
         "year": "2022",
-        "description": "VIP chalets and royal reception areas fitted to the highest international standards within a strict 6-week timeframe.",
-        "image": "https://d34w7g4gy10iej.cloudfront.net/photos/2411/8755715.jpg",
-        "imageAlt": "Bahrain International Airshow at Sakhir Air Base"
+        "description": "Interior fit-out works delivered for commercial spaces requiring coordinated joinery, refined finishes, and dependable execution timelines.",
+        "image": "assets/kitchen.png",
+        "imageAlt": "Commercial interior wood finish"
       },
       {
-        "category": "LUXURY RETAIL",
-        "titleHtml": "TOPMEN<br>BOUTIQUE",
-        "location": "Location: Seef Mall",
+        "category": "BOUTIQUES",
+        "titleHtml": "BOUTIQUE<br>INTERIORS",
+        "location": "",
         "year": "2023",
-        "description": "Dark oak panelling, leather-wrapped counters, and brass detailing for Bahrain's premier men's fashion destination.",
-        "image": "assets/topmen-boutique.jpg",
-        "imageAlt": "TopMen Boutique interior"
+        "description": "Boutique spaces completed with bespoke cabinetry, display features, and detailing tailored to a premium customer experience.",
+        "image": "assets/pergola.png",
+        "imageAlt": "Architectural wood structure detail"
       },
       {
         "category": "CULTURAL SPACE",
-        "titleHtml": "BUSAAD<br>ART GALLERY",
-        "location": "Location: Muharraq",
+        "titleHtml": "CULTURAL<br>SPACES",
+        "location": "",
         "year": "2020",
-        "description": "Restoration of a traditional Bahraini house into a contemporary art space, preserving the original wooden rafters and structural integrity.",
+        "description": "Specialist joinery and restoration-oriented woodwork adapted for cultural spaces where finish quality and spatial character matter equally.",
         "image": "assets/busaad-art-gallery.webp",
-        "imageAlt": "Busaad Art Gallery interior"
+        "imageAlt": "Cultural interior space"
       }
     ]
   },
   "about": {
     "watermarkPrimary": "CRAFT",
-    "watermarkSecondary": "1983",
+    "watermarkSecondary": "LEGACY",
     "kicker": "Built in Sitra. Delivered across Bahrain.",
-    "lead": "Arabesque Carpentry has spent four decades turning technical woodwork into finished spaces of presence: doors, fit-outs, staircases, wardrobes, kitchens, and specialist joinery for civic, religious, retail, and residential projects.",
+    "lead": "Arabesque Carpentry delivers technical woodwork through finished spaces of presence: doors, fit-outs, staircases, wardrobes, kitchens, and specialist joinery for civic, religious, retail, and residential environments.",
     "workshopLabel": "SITRA WORKSHOP",
     "workshopValue": "Architectural woodwork with precision finishing, engineered detailing, and large-scale delivery.",
     "ethos": "The factory in Sitra is built to handle both repetition and refinement: production-grade capacity for major packages, with enough control to protect the detailing, proportions, and finishing that high-visibility interiors demand.",
@@ -95,21 +95,21 @@
       },
       {
         "titleHtml": "BAHRAIN<br>TRUST",
-        "description": "Work spans mosques, palaces, public institutions, retail chains, and private residences across the Kingdom."
+        "description": "Work spans mosques, public institutions, retail environments, and private residences across the Kingdom."
       }
     ],
     "metrics": [
       {
-        "value": "50+",
-        "label": "Major clients including Royal Court"
+        "value": "MAJOR",
+        "label": "Government, commercial, and private-sector clients"
       },
       {
-        "value": "ISO 9001",
-        "label": "Certified since 2015"
+        "value": "ISO 9001:2015",
+        "label": "Quality Management Systems certified since 2017"
       },
       {
-        "value": "9",
-        "label": "Countries under fire certification"
+        "value": "FIRE-RATED",
+        "label": "Door solutions and specialist joinery"
       }
     ]
   },
@@ -119,6 +119,6 @@
     "phoneHref": "+97317701006",
     "whatsappLabel": "wa.me/17701006",
     "whatsappHref": "https://wa.me/17701006",
-    "footerCopy": "© 2025 Al Dhaen Contracting & Trading WLL · Arabesque Carpentry"
+    "footerCopy": "(c) 2025 Al Dhaen Contracting & Trading WLL - Arabesque Carpentry"
   }
 }

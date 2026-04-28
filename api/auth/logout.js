@@ -1,8 +1,10 @@
 const { clearSession } = require('../_lib/session');
 
 module.exports = async function handler(req, res) {
-  clearSession(res);
+  clearSession(req, res);
   res.statusCode = 302;
-  res.setHeader('Location', '/admin/');
+  const referer = String(req.headers.referer || '');
+  const cmsBasePath = referer.includes('/admin-control') ? '/admin-control/' : '/admin/';
+  res.setHeader('Location', cmsBasePath);
   res.end();
 };

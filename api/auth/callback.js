@@ -27,7 +27,7 @@ module.exports = async function handler(req, res) {
       return;
     }
 
-    setSession(res, {
+    setSession(req, res, {
       login: user.login,
       token
     });

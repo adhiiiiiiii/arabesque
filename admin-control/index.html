@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arabesque Admin Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#1a1a1a',
+            panel: '#242424',
+            field: '#2e2e2e',
+            accent: '#d4a853',
+            accentSoft: 'rgba(212, 168, 83, 0.16)',
+            ink: '#f5f1e8'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Playfair Display', 'serif']
+          },
+          boxShadow: {
+            glow: '0 0 0 1px rgba(212,168,83,0.18), 0 24px 60px rgba(0,0,0,0.35)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(212, 168, 83, 0.14), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(212, 168, 83, 0.08), transparent 24%),
+        #1a1a1a;
+      color: #f5f1e8;
+    }
+  </style>
+  <script src="/admin/login.js" defer></script>
+</head>
+<body>
+  <main class="min-h-screen px-5 py-8 md:px-8 md:py-10">
+    <div class="mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl overflow-hidden rounded-[36px] border border-white/10 bg-black/20 shadow-2xl shadow-black/30 backdrop-blur-xl lg:grid-cols-[1.15fr_0.85fr]">
+      <section class="relative flex flex-col justify-between overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_top,rgba(212,168,83,0.18),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))] p-8 md:p-12 lg:border-b-0 lg:border-r">
+        <div class="absolute inset-0 opacity-40" aria-hidden="true">
+          <div class="absolute left-10 top-10 h-40 w-40 rounded-full bg-accent/10 blur-3xl"></div>
+          <div class="absolute bottom-10 right-10 h-48 w-48 rounded-full bg-amber-200/5 blur-3xl"></div>
+        </div>
+
+        <div class="relative">
+          <div class="font-display text-4xl tracking-[0.08em] text-white md:text-5xl">ARABESQUE</div>
+          <div class="mt-2 text-[11px] font-semibold uppercase tracking-[0.34em] text-accent">Admin Control</div>
+        </div>
+
+        <div class="relative max-w-2xl py-12">
+          <div class="inline-flex rounded-full border border-accent/25 bg-accentSoft px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-accent">
+            Protected Access
+          </div>
+          <h1 class="mt-6 font-display text-5xl leading-none text-white md:text-7xl">A private control panel for Arabesque.</h1>
+          <p class="mt-6 max-w-xl text-base leading-8 text-zinc-300 md:text-lg">
+            Sign in to manage live site content, review updates, and publish changes through the existing Git-backed deployment flow.
+          </p>
+        </div>
+
+        <div class="relative grid gap-4 md:grid-cols-3">
+          <div class="rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
+            <div class="text-xs font-semibold uppercase tracking-[0.22em] text-zinc-500">Route</div>
+            <div class="mt-3 text-sm font-semibold text-white">/admin-control</div>
+          </div>
+          <div class="rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
+            <div class="text-xs font-semibold uppercase tracking-[0.22em] text-zinc-500">Auth</div>
+            <div class="mt-3 text-sm font-semibold text-white">Username + Password</div>
+          </div>
+          <div class="rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
+            <div class="text-xs font-semibold uppercase tracking-[0.22em] text-zinc-500">Deploy</div>
+            <div class="mt-3 text-sm font-semibold text-white">Git-backed publishing</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="flex items-center justify-center p-6 md:p-10">
+        <div class="w-full max-w-md rounded-[32px] border border-white/10 bg-panel/95 p-6 shadow-glow md:p-8">
+          <div class="text-xs font-semibold uppercase tracking-[0.24em] text-accent">Authentication</div>
+          <h2 class="mt-4 text-3xl font-semibold text-white">Sign in</h2>
+          <p class="mt-3 text-sm leading-7 text-zinc-400">
+            Enter your admin credentials to continue to the Arabesque content dashboard.
+          </p>
+
+          <div class="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-zinc-300" id="cms-status">
+            Enter your username and password.
+          </div>
+
+          <form class="mt-6 space-y-4" id="cms-login-form">
+            <label class="block">
+              <span class="mb-2 block text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">Username</span>
+              <input
+                id="cms-username"
+                name="username"
+                type="text"
+                autocomplete="username"
+                required
+                class="w-full rounded-2xl border border-white/10 bg-field px-4 py-3 text-sm text-white outline-none transition focus:border-accent/60 focus:ring-4 focus:ring-accent/10"
+              >
+            </label>
+
+            <label class="block">
+              <span class="mb-2 block text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">Password</span>
+              <input
+                id="cms-password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+                class="w-full rounded-2xl border border-white/10 bg-field px-4 py-3 text-sm text-white outline-none transition focus:border-accent/60 focus:ring-4 focus:ring-accent/10"
+              >
+            </label>
+
+            <button
+              class="inline-flex w-full items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-obsidian transition hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-70"
+              id="cms-login-submit"
+              type="submit"
+            >
+              Enter Dashboard
+            </button>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

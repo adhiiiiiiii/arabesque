@@ -1,9 +1,10 @@
 const crypto = require('crypto');
+const { getConfigValue } = require('./runtime-config');
 
 const COOKIE_NAME = 'arabesque_cms_session';
 
 function getSecret() {
-  return process.env.CMS_SESSION_SECRET || 'change-me-in-vercel';
+  return getConfigValue('CMS_SESSION_SECRET', 'change-me-in-vercel');
 }
 
 function sign(value) {
@@ -43,13 +44,21 @@ function getSession(req) {
   return decodeSession(cookies[COOKIE_NAME]);
 }
 
-function setSession(res, data) {
-  const value = encodeSession(data);
-  res.setHeader('Set-Cookie', `${COOKIE_NAME}=${value}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=28800`);
+function isSecureRequest(req) {
+  const forwardedProto = String(req?.headers?.['x-forwarded-proto'] || '').toLowerCase();
+  const host = String(req?.headers?.host || '');
+  return forwardedProto === 'https' || (!host.startsWith('localhost') && !host.startsWith('127.0.0.1'));
 }
 
-function clearSession(res) {
-  res.setHeader('Set-Cookie', `${COOKIE_NAME}=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`);
+function setSession(req, res, data) {
+  const value = encodeSession(data);
+  const secureFlag = isSecureRequest(req) ? ' Secure;' : '';
+  res.setHeader('Set-Cookie', `${COOKIE_NAME}=${value}; Path=/; HttpOnly;${secureFlag} SameSite=Lax; Max-Age=28800`);
+}
+
+function clearSession(req, res) {
+  const secureFlag = isSecureRequest(req) ? ' Secure;' : '';
+  res.setHeader('Set-Cookie', `${COOKIE_NAME}=; Path=/; HttpOnly;${secureFlag} SameSite=Lax; Max-Age=0`);
 }
 
 module.exports = {

@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const { setSession } = require('../_lib/session');
+const { getConfigValue } = require('../_lib/runtime-config');
 
 function safeEqual(a, b) {
   const left = Buffer.from(String(a || ''));
@@ -9,42 +10,75 @@ function safeEqual(a, b) {
   return crypto.timingSafeEqual(left, right);
 }
 
+function readBody(req) {
+  return new Promise((resolve, reject) => {
+    let raw = '';
+    req.on('data', (chunk) => {
+      raw += chunk;
+    });
+    req.on('end', () => resolve(raw));
+    req.on('error', reject);
+  });
+}
+
+async function parseBody(req) {
+  if (req.body && typeof req.body === 'object') return req.body;
+  if (typeof req.body === 'string') return JSON.parse(req.body || '{}');
+
+  const raw = await readBody(req);
+  return raw ? JSON.parse(raw) : {};
+}
+
+function json(res, statusCode, payload) {
+  res.statusCode = statusCode;
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(payload));
+}
+
 module.exports = async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.statusCode = 405;
-    res.end('Method not allowed');
+  if (req.method === 'OPTIONS') {
+    res.statusCode = 204;
+    res.setHeader('Allow', 'GET, POST, OPTIONS');
+    res.end();
     return;
   }
 
-  const expectedUsername = process.env.CMS_ADMIN_USERNAME;
-  const expectedPassword = process.env.CMS_ADMIN_PASSWORD;
+  if (req.method !== 'POST' && req.method !== 'GET') {
+    res.setHeader('Allow', 'GET, POST, OPTIONS');
+    json(res, 405, { ok: false, message: 'Method not allowed.' });
+    return;
+  }
+
+  const expectedUsername = String(getConfigValue('CMS_ADMIN_USERNAME') || '').trim();
+  const expectedPassword = String(getConfigValue('CMS_ADMIN_PASSWORD') || '').trim();
 
   if (!expectedUsername || !expectedPassword) {
-    res.statusCode = 500;
-    res.end('Missing CMS_ADMIN_USERNAME or CMS_ADMIN_PASSWORD.');
+    json(res, 500, {
+      ok: false,
+      message: 'CMS credentials are not configured. Add CMS_ADMIN_USERNAME and CMS_ADMIN_PASSWORD.'
+    });
     return;
   }
 
   try {
-    const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    const body = req.method === 'GET' ? (req.query || {}) : await parseBody(req);
     const username = String(body?.username || '').trim();
-    const password = String(body?.password || '');
+    const password = String(body?.password || '').trim();
 
     if (!safeEqual(username, expectedUsername) || !safeEqual(password, expectedPassword)) {
-      res.statusCode = 401;
-      res.end('Invalid username or password.');
+      json(res, 401, { ok: false, message: 'Invalid username or password.' });
       return;
     }
 
-    setSession(res, {
+    setSession(req, res, {
       login: username,
-      authType: 'password'
+      authType: 'password',
+      panel: 'cms',
+      issuedAt: Date.now()
     });
 
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({ ok: true, user: username }));
+    json(res, 200, { ok: true, user: username, authType: 'password' });
   } catch (error) {
-    res.statusCode = 400;
-    res.end(error.message || 'Invalid login payload.');
+    json(res, 400, { ok: false, message: error.message || 'Invalid login payload.' });
   }
 };
